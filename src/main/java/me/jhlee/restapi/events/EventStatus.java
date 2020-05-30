@@ -11,4 +11,5 @@ package me.jhlee.restapi.events;
  * @since 2020-05-30
  */
 public enum EventStatus {
+    DRAFT, PUBLISHED, BEGAN_ENROLLMENT;
 }
