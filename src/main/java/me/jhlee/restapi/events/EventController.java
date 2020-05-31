@@ -1,6 +1,8 @@
 package me.jhlee.restapi.events;
 
 import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -28,12 +30,21 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class EventController {
 
     private final EventRepository eventRepository;
+    private final ModelMapper modelMapper;
 
-    @PostMapping()
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+    @PostMapping
+    public ResponseEntity<Event> createEvent(@RequestBody EventDto eventDto) {
+
+        /* 아래처럼 해야하지만, ModelMapper를 사용
+        Event event = Event.builder()
+                .name(eventDto.getName())
+                .description(eventDto.getDescription())
+                .build();
+         */
+        Event event = modelMapper.map(eventDto, Event.class);
+
         Event newEvent = this.eventRepository.save(event);
         URI createUri = linkTo(EventController.class).slash(newEvent.getId()).toUri();
-        event.setId(10);
         return ResponseEntity.created(createUri).body(event);
     }
 }

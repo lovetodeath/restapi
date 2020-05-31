@@ -2,19 +2,23 @@ package me.jhlee.restapi.events;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * JavaDoc용 클래스의 용도를 설명합니다.
+ *
+ * @author 인프라지원실 TA파트 이준한
+ * @version 1.0
+ * <pre>
+ * 2020.05.31 : 최초 작성
+ * </pre>
+ * @since 2020-05-31
+ */
 @Builder
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id")
-@Entity
-public class Event {
-    @Id @GeneratedValue
-    private Integer id;
+@AllArgsConstructor
+public class EventDto {
     private String name;
     private String description;
     private LocalDateTime beginEnrollmentDateTime;
@@ -25,9 +29,4 @@ public class Event {
     private int basePrice; // (optional)
     private int maxPrice; // (optional)
     private int limitOfEnrollment;
-    private boolean offline;
-    private boolean free;
-
-    @Enumerated(value = EnumType.STRING)
-    private EventStatus eventStatus = EventStatus.DRAFT;
 }
