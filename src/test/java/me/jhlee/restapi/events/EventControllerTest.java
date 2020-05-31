@@ -45,6 +45,7 @@ public class EventControllerTest {
     @Test
     public void createEvent() throws Exception {
         Event event = Event.builder()
+                .id(10)
                 .name("Spring")
                 .description("REST API Development with Spring")
                 .beginEnrollmentDateTime(LocalDateTime.of(2018, 11, 23, 14, 21))
@@ -57,11 +58,9 @@ public class EventControllerTest {
                 .location("강남역 D2 스사텁 팩토리")
                 .build();
 
-        event.setId(10);
         Mockito.when(eventRepository.save(event)).thenReturn(event);
 
         mockMvc.perform(post("/api/events/")
-//                    .contentType(MediaType.APPLICATION_JSON_UTF8)
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaTypes.HAL_JSON)
                     .content(objectMapper.writeValueAsBytes(event)))
